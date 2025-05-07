@@ -19,4 +19,5 @@ admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Deck)
 admin.site.register(Flashcard)
 admin.site.register(Category)
+admin.site.register(Hint)
 
