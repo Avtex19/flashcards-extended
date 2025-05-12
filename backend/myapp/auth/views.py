@@ -1,9 +1,11 @@
+from django.utils import timezone
+
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from .serializers import UserRegistrationSerializer
+from .serializers import UserRegistrationSerializer,UserLoginSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
@@ -36,3 +38,25 @@ class UserRegistrationView(APIView):
             }, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserLoginView(APIView):
+    def post(self, request):
+        serializer = UserLoginSerializer(data=request.data)
+
+        if serializer.is_valid():
+            user = serializer.validated_data['user']
+            refresh = RefreshToken.for_user(user)
+            access_token = refresh.access_token
+            user.last_login = timezone.now()
+            user.save(update_fields=['last_login'])
+
+            return Response({
+                'refresh': str(refresh),
+                'access': str(access_token),
+                'last_login': user.last_login,
+                'username': user.username,
+                'email': user.email,
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
