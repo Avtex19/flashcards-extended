@@ -11,11 +11,15 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CategorySerializer
 
 
-class DeckViewSet(viewsets.ReadOnlyModelViewSet):
+class DeckViewSet(viewsets.ModelViewSet):
     queryset = Deck.objects.all()
     serializer_class = DeckSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = DeckFilter
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 
 
 class FlashcardViewSet(viewsets.ReadOnlyModelViewSet):
