@@ -24,7 +24,7 @@ export const getDecks = async (limit = 6, offset = 0): Promise<DeckListResponse 
         const response = await axiosInstance.get<DeckListResponse>('/api/decks/', {
             params: { limit, offset },
         });
-        console.log('Fetched decks:', response.data); // ✅ Check if data is coming in
+        console.log('Fetched decks:', response.data);
 
         return response.data;
     } catch (error) {
