@@ -21,7 +21,6 @@ class DeckViewSet(viewsets.ModelViewSet):
         serializer.save(owner=self.request.user)
 
 
-
 class FlashcardViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Flashcard.objects.all()
     serializer_class = FlashcardSerializer
