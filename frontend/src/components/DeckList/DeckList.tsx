@@ -81,12 +81,12 @@ const DeckList: React.FC = () => {
                                 }}
                             >
                                 <div style={{display: 'flex', alignItems: 'center', gap: 10}}>
-                                    <Typography variant="body2" color="text.primary" sx={{marginRight: 0}}>
-                                        {deck.owner}
-                                    </Typography>
                                     <Avatar sx={{bgcolor: randomColor, width: 24, height: 24, fontSize: 14}}>
                                         {deck.owner ? deck.owner.charAt(0).toUpperCase() : 'U'}
                                     </Avatar>
+                                    <Typography variant="body2" color="text.primary" sx={{marginRight: 0}}>
+                                        {deck.owner}
+                                    </Typography>
                                 </div>
 
                                 <Button size="small">View</Button>
